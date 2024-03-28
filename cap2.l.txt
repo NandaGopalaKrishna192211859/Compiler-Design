@@ -17,3 +17,6 @@ int yywrap( )
 {
 	return 1;
 }
+
+
+![capital](https://github.com/NandaGopalaKrishna192211859/Compiler-Design/assets/123743796/59c02d91-f121-44bc-ae7c-24ce30c966dd)
