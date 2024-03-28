@@ -1,0 +1,21 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+"http://www."[a-zA-Z0-9.]+\.com { printf("\nValid URL\n"); }
+"http://"[a-zA-Z0-9.]+\.com { printf("\nValid URL\n"); }
+.+ { printf("\nInvalid URL\n"); }
+%%
+
+int main()
+{
+    printf("\nEnter the URL: ");
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

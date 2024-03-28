@@ -1,0 +1,40 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+int char_count = 0;
+int line_count = 0;
+int word_count = 0;
+%}
+
+%%
+[a-zA-Z_][a-zA-Z0-9_]* { word_count++; }
+
+[\t\n ]+ { /* Ignore whitespace, tabs, and newlines */ }
+
+\/\/[^\n]* { /* Ignore single-line comments */ }
+
+\/\*([^*]|\*+[^*/])*\*+\/ { /* Ignore multi-line comments */ }
+
+. { /* Count characters and lines */
+    char_count++;
+    if (*yytext == '\n') {
+        line_count++;
+    }
+}
+
+%%
+
+int main()
+{
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    printf("Number of characters: %d\n", char_count);
+    printf("Number of lines: %d\n", line_count + 1); // Add 1 for the last line
+    printf("Number of words: %d\n", word_count);
+    return 1; // Indicates end of input
+}

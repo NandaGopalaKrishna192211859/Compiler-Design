@@ -1,0 +1,20 @@
+%{
+#include<stdio.h>
+%}
+
+%%
+[a-z.0-9]+@[a-z]+(.com|.in) {printf("\n valid\n");}
+.+ {printf("\n Invalid\n");}
+%%
+
+int main()
+{
+printf("\nEnter : ");
+yylex();
+return 0;
+}
+
+int yywrap()
+{
+return 1;
+}

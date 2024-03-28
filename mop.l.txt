@@ -1,0 +1,64 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+%}
+
+%%
+
+[0-9]+ {
+    printf("Operand: %s\n", yytext);
+    return atoi(yytext); // Return the integer value directly
+}
+
+"+"     { printf("Operator: Addition (+)\n"); return '+'; }
+"-"     { printf("Operator: Subtraction (-)\n"); return '-'; }
+"*"     { printf("Operator: Multiplication (*)\n"); return '*'; }
+"/"     { printf("Operator: Division (/)\n"); return '/'; }
+[ \t\n] ; /* Ignore whitespace */
+
+.       { printf("Invalid character: %s\n", yytext); }
+
+%%
+
+int main()
+{
+    int operand1, operand2;
+    char operator;
+
+    printf("Enter the expression (operand operator operand): ");
+    operand1 = yylex(); // Read the first operand
+
+    operator = yylex(); // Read the operator
+
+    if (operator == '+' || operator == '-' || operator == '*' || operator == '/') {
+        printf("Enter the second operand: ");
+        operand2 = yylex(); // Read the second operand
+
+        switch (operator) {
+            case '+':
+                printf("%d + %d = %d\n", operand1, operand2, operand1 + operand2);
+                break;
+            case '-':
+                printf("%d - %d = %d\n", operand1, operand2, operand1 - operand2);
+                break;
+            case '*':
+                printf("%d * %d = %d\n", operand1, operand2, operand1 * operand2);
+                break;
+            case '/':
+                if (operand2 != 0)
+                    printf("%d / %d = %d\n", operand1, operand2, operand1 / operand2);
+                else
+                    printf("Error: Division by zero\n");
+                break;
+        }
+    } else {
+        printf("Error: Invalid operator\n");
+    }
+
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}

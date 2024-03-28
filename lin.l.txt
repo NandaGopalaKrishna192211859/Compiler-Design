@@ -1,0 +1,25 @@
+%{
+#include <stdio.h>
+int line_number = 1;
+%}
+
+%%
+
+\n { 
+    printf("%d: ", line_number++);
+    ECHO;
+}
+
+.|\n ;
+
+%%
+
+int main()
+{
+    yylex();
+    return 0;
+}
+
+int yywrap() {
+    return 1; // Indicate end of input
+}
